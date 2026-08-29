@@ -33,7 +33,7 @@
             font-weight: 700;
         }
         .highlight {
-            color: #6366f1; /* Purple/Indigo accent */
+            color: #6366f1;
         }
         p.subtitle {
             font-size: 1.2rem;
@@ -53,7 +53,7 @@
             background: #1e293b;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        .video-container iframe, .video-container video {
+        .video-container iframe {
             position: absolute;
             top: 0;
             left: 0;
@@ -90,15 +90,12 @@
             padding: 15px;
         }
         .card-title {
-            font-size: 1.1rem;
-            margin-bottom: 8px;
+            font-size: 1.05rem;
+            margin-bottom: 4px;
             color: #ffffff;
+            font-weight: 600;
         }
-        .card-desc {
-            font-size: 0.9rem;
-            color: #94a3b8;
-        }
-        /* Skills & Software */
+        /* Skills & Tags */
         .skills {
             display: flex;
             flex-wrap: wrap;
@@ -165,7 +162,6 @@
         <section class="showreel-section">
             <h2 class="section-title">Showreel</h2>
             <div class="video-container">
-                <!-- Replace with your main Showreel video link -->
                 <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY" allowfullscreen></iframe>
             </div>
         </section>
@@ -176,35 +172,32 @@
             <div class="grid">
                 
                 <!-- Project 1 -->
-                <div class="card">
+                <div class="card" data-youtube="https://www.youtube.com/watch?v=tgbNymZ7vqY">
                     <div class="video-container">
                         <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY" allowfullscreen></iframe>
                     </div>
                     <div class="card-body">
-                        <h3 class="card-title">Commercial Motion Graphics</h3>
-                        <p class="card-desc">2D design & animation for a brand advertising campaign.</p>
+                        <h3 class="card-title">Loading title...</h3>
                     </div>
                 </div>
 
                 <!-- Project 2 -->
-                <div class="card">
+                <div class="card" data-youtube="https://www.youtube.com/watch?v=tgbNymZ7vqY">
                     <div class="video-container">
                         <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY" allowfullscreen></iframe>
                     </div>
                     <div class="card-body">
-                        <h3 class="card-title">3D Logo Animation</h3>
-                        <p class="card-desc">3D logo reveal featuring dynamic lighting effects.</p>
+                        <h3 class="card-title">Loading title...</h3>
                     </div>
                 </div>
 
                 <!-- Project 3 -->
-                <div class="card">
+                <div class="card" data-youtube="https://www.youtube.com/watch?v=tgbNymZ7vqY">
                     <div class="video-container">
                         <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY" allowfullscreen></iframe>
                     </div>
                     <div class="card-body">
-                        <h3 class="card-title">Explainer Video</h3>
-                        <p class="card-desc">Product feature walkthrough and app onboarding animation.</p>
+                        <h3 class="card-title">Loading title...</h3>
                     </div>
                 </div>
 
@@ -222,6 +215,33 @@
             <p>© 2026 Nima Motion. All rights reserved.</p>
         </footer>
     </div>
+
+    <!-- Script to Auto-Fetch YouTube Titles -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const cards = document.querySelectorAll('.card[data-youtube]');
+            
+            cards.forEach(card => {
+                const videoUrl = card.getAttribute('data-youtube');
+                const titleElement = card.querySelector('.card-title');
+                
+                if (videoUrl) {
+                    fetch(`https://noembed.com/embed?url=${encodeURIComponent(videoUrl)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.title) {
+                                titleElement.textContent = data.title;
+                            } else {
+                                titleElement.textContent = "Motion Project";
+                            }
+                        })
+                        .catch(() => {
+                            titleElement.textContent = "Motion Project";
+                        });
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>
